@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: rollingstone-ecommerce-rabbitmq-fanout-finance-api-consumer
+  cloud:
+    config:
+      uri: http://localhost:9000 
