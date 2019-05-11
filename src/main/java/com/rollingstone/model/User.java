@@ -1,5 +1,7 @@
 package com.rollingstone.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class User {
 	private long id;
 	
 	public User(long id, String userName, String firstName, String lastName, String sex, String memberType,
-			String accountNumber, String registrationDate) {
+			String accountNumber, Date registrationDate) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -28,6 +30,14 @@ public class User {
 		this.memberType = memberType;
 		this.accountNumber = accountNumber;
 		this.registrationDate = registrationDate;
+	}
+	
+	public User(long id, String firstName, String lastName,	String accountNumber) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.accountNumber = accountNumber;
 	}
 	
 	public User() {
@@ -91,11 +101,11 @@ public class User {
 		this.accountNumber = accountNumber;
 	}
 
-	public String getRegistrationDate() {
+	public Date getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(String registrationDate) {
+	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 
@@ -118,7 +128,7 @@ public class User {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false, unique = false, length = 10)
-	private String registrationDate;
+	private Date registrationDate;
 
 	@Override
 	public String toString() {

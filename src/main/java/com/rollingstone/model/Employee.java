@@ -1,5 +1,6 @@
 package com.rollingstone.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class Employee {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "START_DATE", nullable = false, unique = false, length = 10)
-	private String startDate;
+	private Date startDate;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
 	private Set<Address> addresses = new HashSet<Address>();
@@ -108,11 +109,11 @@ public class Employee {
 		this.employeeType = employeeType;
 	}
 
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -133,7 +134,7 @@ public class Employee {
 	}
 
 	public Employee(long id, String employeeNumber, String employeeName, String firstName, String lastName, String sex,
-			String employeeType, String startDate, Set<Address> addresses, Set<EmployeeContacts> contacts) {
+			String employeeType, Date startDate, Set<Address> addresses, Set<EmployeeContacts> contacts) {
 		super();
 		this.id = id;
 		this.employeeNumber = employeeNumber;
@@ -146,6 +147,15 @@ public class Employee {
 		this.addresses = addresses;
 		this.contacts = contacts;
 	}
+	
+	public Employee(long id, String employeeNumber, String employeeName, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.employeeNumber = employeeNumber;
+		this.employeeName = employeeName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+        }
 
 	public Employee() {
 		super();

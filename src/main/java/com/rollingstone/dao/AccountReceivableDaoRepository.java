@@ -12,6 +12,6 @@ public interface AccountReceivableDaoRepository extends PagingAndSortingReposito
 
 	Page<AccountRceivable> findAll(Pageable pageable);
 	
-	@Query(name = "AccountReceivableDaoRepository.getAccountRceivableByID", nativeQuery = true)
-	AccountRceivable getAccountRceivableByID(@Param("id") long id);
+	//@Query(name = "AccountReceivableDaoRepository.getAccountRceivableByID", nativeQuery = true)
+	//AccountRceivable getAccountRceivableByID(@Param("id") long id);
 }

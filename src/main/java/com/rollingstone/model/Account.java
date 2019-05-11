@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		})
 })
 @Entity
-@Table(name = "ROLLINGSTONE_ADDRESS")
+@Table(name = "ROLLINGSTONE_ACCOUNT")
 public class Account {
 
 	@Id

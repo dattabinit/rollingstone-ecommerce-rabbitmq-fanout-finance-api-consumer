@@ -173,6 +173,14 @@ public class ItemMaster {
 		this.productOf = productOf;
 		this.shippedBy = shippedBy;
 	}
+	
+	public ItemMaster(int itemQuantity,String itemUPCCode,String itemName, String itemColor,String itemSize, String itemShippedBy) {
+		this.itemUPCCode = itemUPCCode;
+		this.itemName = itemName;
+		this.itemSize = itemSize;
+		this.itemColor = itemColor;
+		this.shippedBy = itemShippedBy;
+	}
 
 	public ItemMaster() {
 		super();

@@ -1,5 +1,7 @@
 package com.rollingstone.service;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,7 +34,12 @@ public class AccountRceivableServiceImpl implements AccountReceivableService {
 	@Override
 	public AccountRceivable getAccountRceivable(long id) {
 	
-		AccountRceivable accountRceivable = accountReceivableDaoRepository.getAccountRceivableByID(id);
+		//AccountRceivable accountRceivable = accountReceivableDaoRepository.getAccountRceivableByID(id);
+		
+		Optional<AccountRceivable> accountRceivableOptional = accountReceivableDaoRepository.findById(id);
+		
+		AccountRceivable accountRceivable = accountRceivableOptional.get();
+
 		return accountRceivable;
 	}
 

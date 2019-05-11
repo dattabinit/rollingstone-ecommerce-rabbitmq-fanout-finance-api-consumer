@@ -23,7 +23,7 @@ public class SalesOrderRabbitMQMessageConsumerListerner {
 		this.accountReceivableService = accountReceivableService;
 	}
 	
-	@RabbitListener(queues = "${accounts-receivable.queue.name}")
+	@RabbitListener(queues = "${account-receivable.queue.name}")
 	public void receiveMessageForFinanceConsumerFromSalesProducer(final SalesOrderDTO salesOrderDTO) {
 		logger.info("Received message from Sales Order Producer Application :"+salesOrderDTO.toString());
 		

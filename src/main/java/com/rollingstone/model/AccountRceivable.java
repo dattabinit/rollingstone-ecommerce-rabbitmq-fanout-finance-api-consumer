@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "ACCOUNT_RECEIVABLE")
+@Table(name = "ROLLINGSTONE_ACCOUNT_RECEIVABLE")
 public class AccountRceivable {
 
 	@Id

@@ -4,7 +4,6 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,49 +13,48 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 
 @Configuration
-public class AccountReceivableListernerConfig {
+public class AccountReceivableListenerConfig {
+	@Value("${account-receivable.queue.name}")
+	private  String accountReceivableQueueName;
 
-	@Value("${accounts-receivable.exchange.name}")
-	private String accountReceivableExchangeName;
+	@Value("${account-receivable.exchange.name}")
+	private  String salesOrderExchangeName;
 	
-	@Value("${accounts-receivable.queue.name}")
-	private String accountReceivableQueueName;
-	
-	@Value("${accounts-receivable.routing.name.key}")
-	private String accountReceivableRoutingKeyName;
-	
-	@Bean
-	public FanoutExchange getAccountSalesOrderFanoutExchange() {
-		return new FanoutExchange(accountReceivableExchangeName);
-	}
-	
+	@Value("${account-receivable.routing.key}")
+	private  String accountReceivableRoutingKey;
+
 	@Bean
 	public Queue getAccountReceivableQueue() {
 		return new Queue(accountReceivableQueueName);
 	}
-	
+	@Bean
+	public FanoutExchange getSalesOrderFanoutExchangeExchange() {
+		return new FanoutExchange(salesOrderExchangeName);
+	}
+
 	@Bean
 	public Binding bindAccountQueueForExchange() {
-		return BindingBuilder.bind(getAccountReceivableQueue()).to(getAccountSalesOrderFanoutExchange());
+		return BindingBuilder.bind(getAccountReceivableQueue()).to(getSalesOrderFanoutExchangeExchange());
 	}
-	
+
 	@Bean
-	public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter() {
+	public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-	
+
 	@Bean
 	public MappingJackson2MessageConverter consumerJackson2MessageConverter() {
 		return new MappingJackson2MessageConverter();
 	}
-	@Bean 
-	public DefaultMessageHandlerMethodFactory messageHandlerMethodFacotry() {
-		DefaultMessageHandlerMethodFactory factory  = new DefaultMessageHandlerMethodFactory();
+	
+	@Bean
+	public DefaultMessageHandlerMethodFactory messageHandlerMethodFactory() {
+		DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
 		factory.setMessageConverter(consumerJackson2MessageConverter());
 		return factory;
 	}
-	
+
 	public void configureRabbitListeners(final RabbitListenerEndpointRegistrar registrar) {
-		registrar.setMessageHandlerMethodFactory(messageHandlerMethodFacotry());
+		registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
 	}
 }

@@ -23,7 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@SqlResultSetMapping(name = "salesordermapping", classes = {
+@SqlResultSetMapping(name = "SalesOrderMapping", classes = {
 		@ConstructorResult(targetClass = SalesOrderDTO.class, columns  = {
 				@ColumnResult(name = "id", type = Long.class),
 				@ColumnResult(name = "order_number"),
@@ -33,10 +33,9 @@ import javax.persistence.TemporalType;
 				@ColumnResult(name = "item_quantity", type = Integer.class),
 				@ColumnResult(name = "item_upc_code"),
 				@ColumnResult(name = "item_name"),
-				@ColumnResult(name = "color"),
-				@ColumnResult(name = "pattern"),
-				@ColumnResult(name = "size"),
-				@ColumnResult(name = "shipped_by"),
+				@ColumnResult(name = "item_color"),
+				@ColumnResult(name = "item_size"),
+				@ColumnResult(name = "item_shipped_by"),
 				@ColumnResult(name = "house_number"),
 				@ColumnResult(name = "street_address"),
 				@ColumnResult(name = "city"),
@@ -56,24 +55,24 @@ import javax.persistence.TemporalType;
 		})
 })
 @NamedNativeQueries({
-	@NamedNativeQuery(name = "SalesOrderDaoRepository.getSalesOrderByid",
+	@NamedNativeQuery(name = "SalesOrderDaoRepository.getSalesOrderByID",
 			query = " select so.id, so.order_number, so.shipping_method, so.estimated_delivery_date, so.special_instruction, " + 
 
-					" sod.item_quantity, itm.item_upc_code, itm.item_name, itm.color, itm.pattern, itm.size, itm.shipped_by, " +
+					" sod.item_quantity, itm.item_upc_code, itm.item_name, itm.item_color, itm.item_size, itm.item_shipped_by, " +
 
 					" addr.house_number, addr.street_address, addr.city, addr.state, addr.zip_code, acc.id acc_id, usr.id user_id, " + 
 
 					" so.sales_date, so.total_order_amount, acc.account_number, acc.account_name, emp.employee_number, emp.id emp_id, " +
 
-					" emp.employee_name, usr.first_name, usr.last_name from rollingstone_sales_order so, sales_order_details sod, " +
+					" emp.employee_name, usr.first_name, usr.last_name from ROLLINGSTONE_SALES_ORDER so, ROLLINGSTONE_SALES_ORDER_DETAILS sod, " +
 
-					" rollingstone_account acc, rollingstone_address addr, rollingstone_employee emp, rollingstone_item itm, " + 
+					" ROLLINGSTONE_ACCOUNT acc, ROLLINGSTONE_ADDRESS addr, ROLLINGSTONE_EMPLOYEE emp, ROLLINGSTONE_ITEM itm, " + 
 
-					" rollingstone_user usr where so.account_id = acc.id and so.id = sod.sales_order_id and sod.item_id = itm.id " + 
+					" ROLLINGSTONE_USER usr where so.account_id = acc.id and so.id = sod.sales_order_id and sod.item_id = itm.id " + 
 
 					" and so.employee_id = emp.id and acc.id = addr.account_id and acc.user_profile_id = usr.id and so.id = :id", 
 
-					   resultSetMapping = "salesordermapping" )
+					   resultSetMapping = "SalesOrderMapping" )
 
 })
 
@@ -96,14 +95,14 @@ public class SalesOrder {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "SALES_DATE", nullable = false, unique = false, length = 10)
-	private String salesDate;
+	private Date salesDate;
 	
 	@Column(name = "SHIPPING_METHOD", nullable = false)
 	private String shippingMethod;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ESTIMATED_DELIVERY_DATE", nullable = false, unique = false, length = 10)
-	private String estimatedDeliveryDate;
+	private Date estimatedDeliveryDate;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "EMPLOYEE_ID")
@@ -148,11 +147,11 @@ public class SalesOrder {
 		this.specialInstruction = specialInstruction;
 	}
 
-	public String getSalesDate() {
+	public Date getSalesDate() {
 		return salesDate;
 	}
 
-	public void setSalesDate(String salesDate) {
+	public void setSalesDate(Date salesDate) {
 		this.salesDate = salesDate;
 	}
 
@@ -164,11 +163,11 @@ public class SalesOrder {
 		this.shippingMethod = shippingMethod;
 	}
 
-	public String getEstimatedDeliveryDate() {
+	public Date getEstimatedDeliveryDate() {
 		return estimatedDeliveryDate;
 	}
 
-	public void setEstimatedDeliveryDate(String estimatedDeliveryDate) {
+	public void setEstimatedDeliveryDate(Date estimatedDeliveryDate) {
 		this.estimatedDeliveryDate = estimatedDeliveryDate;
 	}
 
@@ -196,8 +195,8 @@ public class SalesOrder {
 		this.salesOrderDetails = salesOrderDetails;
 	}
 
-	public SalesOrder(long id, String orderNumber, float totalOrderAmount, String specialInstruction, String salesDate,
-			String shippingMethod, String estimatedDeliveryDate, Employee employee, Account account,
+	public SalesOrder(long id, String orderNumber, float totalOrderAmount, String specialInstruction, Date salesDate,
+			String shippingMethod, Date estimatedDeliveryDate, Employee employee, Account account,
 			Set<SalesOrderDetails> salesOrderDetails) {
 		super();
 		this.id = id;

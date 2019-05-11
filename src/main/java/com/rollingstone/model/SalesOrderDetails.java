@@ -112,7 +112,6 @@ public class SalesOrderDetails {
 		result = prime * result + ((item == null) ? 0 : item.hashCode());
 		result = prime * result + ((itemLineNumber == null) ? 0 : itemLineNumber.hashCode());
 		result = prime * result + itemQuantity;
-		result = prime * result + ((salesOrder == null) ? 0 : salesOrder.hashCode());
 		result = prime * result + Float.floatToIntBits(unitPrice);
 		return result;
 	}

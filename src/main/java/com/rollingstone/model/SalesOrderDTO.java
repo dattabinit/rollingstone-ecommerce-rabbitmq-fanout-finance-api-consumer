@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.SqlResultSetMapping;
+
 public class SalesOrderDTO {
 
 	private long id;
@@ -123,6 +127,98 @@ public class SalesOrderDTO {
 		this.item = item;
 		this.salesOrderDetails = salesOrderDetails;
 	}
+	
+	/*
+				@ColumnResult(name = "item_quantity", type = Integer.class),
+				@ColumnResult(name = "item_upc_code"),
+				@ColumnResult(name = "item_name"),
+				@ColumnResult(name = "item_color"),
+				@ColumnResult(name = "item_size"),
+				@ColumnResult(name = "item_shipped_by"),
+				@ColumnResult(name = "house_number"),
+				@ColumnResult(name = "street_address"),
+				@ColumnResult(name = "city"),
+				@ColumnResult(name = "state"),
+				@ColumnResult(name = "zip_code"),
+				@ColumnResult(name = "acc_id", type = Long.class),
+				@ColumnResult(name = "user_id", type = Long.class),
+				@ColumnResult(name = "sales_date", type = Date.class),
+				@ColumnResult(name = "total_order_amount", type = Double.class),
+				@ColumnResult(name = "account_number"),
+				@ColumnResult(name = "account_name"),
+				@ColumnResult(name = "employee_number"),
+				@ColumnResult(name = "emp_id", type = Long.class),
+				@ColumnResult(name = "employee_name"),
+				@ColumnResult(name = "first_name"),
+				@ColumnResult(name = "last_name")
+		})
+})
+
+
+
+	 */
+	
+	public SalesOrderDTO(long id, 
+			String orderNumber,
+			String shippingMethod,
+			Date estimatedDeliveryDate, 
+			String specialInstruction,
+			int itemQuantity,
+			String itemUPCCode,
+			String itemName,
+			String itemColor,
+			String itemSize,
+			String itemShippedBy,
+			String houseNumber,
+			String streetAddress,
+			String city,
+			String state,
+			String zipCode,
+			long accountId,
+			long userId,
+			Date salesDate,
+			double totalSalesOrderamount,
+			String accountNumber,
+			String accountName,
+			String employeeNumber,
+			long employeeId,
+			String employeeName,
+			String firstName,
+			String lastName
+			) {
+		super();
+		this.id = id;
+		this.orderNumber = orderNumber;
+		this.shippingMethod = shippingMethod;
+		this.estimatedDeliveryDate = estimatedDeliveryDate;
+		this.specialInstruction = specialInstruction;
+		this.itemQuantity = itemQuantity;
+		this.totalOrderAmount = totalSalesOrderamount;
+		
+		Employee shippingEmployee = new Employee(employeeId, employeeNumber, employeeName, firstName, lastName);
+		this.employee = shippingEmployee;
+		
+		this.salesDate = salesDate;
+		
+		User accountUser = new User(userId,firstName,lastName,accountNumber);
+		
+		Address customerAddress = new Address(accountId,  houseNumber,  streetAddress,  city,  state,  zipCode);
+		
+		Set addresses = new HashSet<Address>();
+		
+		addresses.add(customerAddress);
+		
+		Account customerAccount = new Account(accountId,  accountNumber,  accountName, accountUser, addresses);
+		
+		
+		this.account = customerAccount;
+		this.address = customerAddress;
+		this.user = accountUser;
+		
+		ItemMaster orderedItem = new ItemMaster(itemQuantity,itemUPCCode,itemName,itemColor,itemSize,itemShippedBy);
+		this.item = orderedItem;
+	}
+	
 	public SalesOrderDTO() {
 		super();
 	}

@@ -115,6 +115,16 @@ public class Address {
 		this.account = account;
 		this.employee = employee;
 	}
+	
+	public Address(long id, String houseNumber, String streetAddress, String city, String state, String zipCode) {
+		super();
+		this.id = id;
+		this.houseNumber = houseNumber;
+		this.streetAddress = streetAddress;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+	}
 
 	public Address() {
 		super();
